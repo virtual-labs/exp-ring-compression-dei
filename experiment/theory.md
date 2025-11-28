@@ -44,6 +44,11 @@
     Ring compression test has been widely used as a test to evaluate the friction condition in metal forming processes.
 </p>
 
+<br>
+<center>
+<iframe width="600" height="400" src="https://www.youtube.com/embed/SIZsIc7U1eM?rel=0" frameborder="0" allowfullscreen></iframe>
+</center><br>
+
 <h2 class="section-title">THE PRINCIPLE OF RING TEST</h2>
 
 <p>
