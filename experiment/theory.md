@@ -4,36 +4,7 @@
     <meta charset="UTF-8">
     <title>Ring Compression Test</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1, h2, h3, .blue {
-            color: #003399;
-        }
-        .section-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 25px;
-        }
-        table {
-            width: 70%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        table, td {
-            border: 1px solid #444;
-        }
-        td {
-            padding: 8px;
-            text-align: left;
-        }
-        .center {
-            text-align: center;
-        }
-    </style>
+   
 </head>
 
 <body>
