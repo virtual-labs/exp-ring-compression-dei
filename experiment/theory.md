@@ -35,7 +35,7 @@
 <br>
 
 <!-- CASE A -->
-<span class="blue">CASE A : RING TEST SIMULATION FOR M = 0.0</span>
+<h3>CASE A : RING TEST SIMULATION FOR M = 0.0</h3>
 
 <table>
 <tr><td>Material</td><td>: AlZn5.6Mg2.5Cu1.6</td></tr>
@@ -60,7 +60,7 @@
 <br>
 
 <!-- CASE B -->
-<span class="blue">CASE B : RING TEST SIMULATION FOR M = 0.10</span>
+<h3>CASE B : RING TEST SIMULATION FOR M = 0.10</h3>
 
 <table>
 <tr><td>Material</td><td>: AlZn5.6Mg2.5Cu1.6</td></tr>
@@ -85,7 +85,7 @@
 <br>
 
 <!-- CASE C -->
-<span class="blue">CASE C : RING TEST SIMULATION FOR M = 0.30</span>
+<h3>CASE C : RING TEST SIMULATION FOR M = 0.30</h3>
 
 <table>
 <tr><td>Material</td><td>: AlZn5.6Mg2.5Cu1.6</td></tr>
@@ -110,7 +110,7 @@
 <br>
 
 <!-- CASE D -->
-<span class="blue">CASE D : RING TEST SIMULATION FOR M = 0.40</span>
+<h3>CASE D : RING TEST SIMULATION FOR M = 0.40</h3>
 
 <table>
 <tr><td>Material</td><td>: AlZn5.6Mg2.5Cu1.6</td></tr>
@@ -134,15 +134,17 @@
 </center>
 <br>
 
-<span class="blue">COMPARISON</span>
+<h2 class="section-title">COMPARISON</h2>
 <br><br>
 
 <center><img src="images/RCT/Comperision.jpg"></center>
 
 <p>
-A ring test simulation was performed for different friction shear factors.  
-The non-isothermal simulation considers heat transfer at the interface.  
-Higher temperatures and friction increase metal flow resistance and alter ring geometry.
+A ring test simulation will be preformed for two different friction shear factors, one material, one press setup. The simulation is 
+non-isothermal, therefore heat transfer at the interface is considered<br>
+The simulations show how temperature and shear friction factor affect metal flow and ring geometry. Compared to isothermal, non-isothermal 
+deformation causes the level of friction to increase.
+
 </p>
 
 <div id="footer">
