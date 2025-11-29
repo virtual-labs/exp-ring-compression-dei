@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ring Compression Test</title>
-
-   
-</head>
-
-<body>
 
 <h1>Ring Compression Test</h1>
 
