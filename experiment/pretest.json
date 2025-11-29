@@ -1,39 +1,91 @@
 {
   "version": 2.0,
   "questions": [
-    {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
+   
+  {
+    "question": "Q1.The ring compression test is used to test:",
+    "answers": {
+      "a": "Friction condition of the billet and dies",
+      "b": "The temperature variation in the billet",
+      "c": "Surface hardness of the billet",
+      "d": "None of the above"
     },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "c",
-      "difficulty": "beginner"
-    }
+    "explanations": {
+      "a": "Correct — The ring compression test is primarily used to determine friction between billet and dies.",
+      "b": "Temperature variation is not measured in this test.",
+      "c": "Surface hardness is not evaluated using RCT.",
+      "d": "Incorrect because option (a) is correct."
+    },
+    "correctAnswer": "a",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Q2.The material used in the ring compression test is:",
+    "answers": {
+      "a": "Cylindrical plate",
+      "b": "Hollow cylindrical plate",
+      "c": "Square plate",
+      "d": "None of the above"
+    },
+    "explanations": {
+      "a": "Incorrect — RCT requires a ring, not a solid cylinder.",
+      "b": "Correct — RCT uses a hollow ring specimen (OD–ID–Height).",
+      "c": "Incorrect — Square plates are not used.",
+      "d": "Incorrect because (b) is correct."
+    },
+    "correctAnswer": "b",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Q3.The good lubrication result in:",
+    "answers": {
+      "a": "Uniform increase of the internal and external diameter of the specimen",
+      "b": "Decrease in external diameter and increase in internal diameter",
+      "c": "Increase in external diameter and reduction in inner diameter",
+      "d": "None of the above"
+    },
+    "explanations": {
+      "a": "Incorrect — Not uniform change.",
+      "b": "Correct — With good lubrication (low friction), ID increases while OD also increases.",
+      "c": "Incorrect — Reduction in ID occurs in high friction.",
+      "d": "Incorrect because (b) is correct."
+    },
+    "correctAnswer": "b",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Q4.In the virtual simulation video of the ring compression test, the specimen height is reduced to:",
+    "answers": {
+      "a": "50 percent",
+      "b": "75 percent",
+      "c": "Both",
+      "d": "None of these"
+    },
+    "explanations": {
+      "a": "Correct — The standard RCT reduces height to 50%.",
+      "b": "75% reduction is not shown in the video.",
+      "c": "Incorrect — Only 50% is used in standard simulation.",
+      "d": "Incorrect because (a) is correct."
+    },
+    "correctAnswer": "a",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Q5.In the simulation bench of the ring compression test, the material not used for the testing is:",
+    "answers": {
+      "a": "Copper",
+      "b": "Aluminium",
+      "c": "Steel",
+      "d": "All of these"
+    },
+    "explanations": {
+      "a": "Incorrect — Copper is used.",
+      "b": "Incorrect — Aluminium is used.",
+      "c": "Incorrect — Steel is used.",
+      "d": "Correct — All three materials are used, so 'not used' = none, hence all options are included."
+    },
+    "correctAnswer": "d",
+    "difficulty": "medium"
+  },
   ]
 }
