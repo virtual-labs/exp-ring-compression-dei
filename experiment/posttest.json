@@ -2,38 +2,89 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "In the simulation bench of the ring compression test, the ram speed of the die is:",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "1mm/sec, 5mm/sec",
+        "b": "1mm/sec, 2mm/sec",
+        "c": "5mm/sec, 10mm/sec",
+        "d": "None of the above"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Correct — These speeds are commonly used in the simulation bench.",
+        "b": "Incorrect — 2mm/sec is not used.",
+        "c": "Incorrect — 10mm/sec not used.",
+        "d": "Incorrect because (a) is correct."
       },
       "correctAnswer": "a",
-      "difficulty": "beginner"
+      "difficulty": "medium"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "Which of the following may not be the friction between the specimen and the dies in the simulation bench of the ring compression test:",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "0.05",
+        "b": "0.4",
+        "c": "1.5",
+        "d": "0.45"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "0.05 is possible (low friction).",
+        "b": "0.4 is possible (moderate friction).",
+        "c": "Correct — 1.5 is unrealistic for metal forming friction.",
+        "d": "0.45 is possible for high friction cases."
       },
       "correctAnswer": "c",
-      "difficulty": "beginner"
+      "difficulty": "medium"
+    },
+    {
+      "question": "In the ring compression test of the specimen, the specimen is deformed by:",
+      "answers": {
+        "a": "Tensile load",
+        "b": "Compression",
+        "c": "Torsion",
+        "d": "Bending"
+      },
+      "explanations": {
+        "a": "Incorrect — No tension involved.",
+        "b": "Correct — RCT compresses the ring between dies.",
+        "c": "Incorrect — No twisting.",
+        "d": "Incorrect — No bending."
+      },
+      "correctAnswer": "b",
+      "difficulty": "easy"
+    },
+    {
+      "question": "In the simulation bench of the ring compression test, the outer and inner diameter of the specimen before testing is:",
+      "answers": {
+        "a": "60mm, 30mm",
+        "b": "40mm, 20mm",
+        "c": "100mm, 50mm",
+        "d": "None of these"
+      },
+      "explanations": {
+        "a": "Correct — Standard ring used is OD=60mm, ID=30mm.",
+        "b": "Incorrect — Not used in RCT simulations here.",
+        "c": "Incorrect — Too large for bench simulation.",
+        "d": "Incorrect because (a) is correct."
+      },
+      "correctAnswer": "a",
+      "difficulty": "easy"
+    },
+    {
+      "question": "In the simulation bench of the ring compression test, the initial height of the specimen is:",
+      "answers": {
+        "a": "10mm",
+        "b": "20mm",
+        "c": "30mm",
+        "d": "40mm"
+      },
+      "explanations": {
+        "a": "Incorrect — 10 mm is the reduced height after 50% reduction.",
+        "b": "Correct — Initial height is 20 mm.",
+        "c": "Incorrect — Not used.",
+        "d": "Incorrect — Not used."
+      },
+      "correctAnswer": "b",
+      "difficulty": "easy"
     }
   ]
 }
