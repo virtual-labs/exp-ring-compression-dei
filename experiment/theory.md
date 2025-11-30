@@ -147,9 +147,6 @@ deformation causes the level of friction to increase.
 
 </p>
 
-<div id="footer">
-    &copy; Metal Forming Virtual Simulation Lab - Dayalbagh Educational Institute (DEI)
-</div>
 
 </body>
 </html>
