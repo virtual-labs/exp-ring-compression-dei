@@ -1,1 +1,1 @@
-## Experiment name
+## Ring Compression Test
