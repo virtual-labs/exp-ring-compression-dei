@@ -1,13 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<!-- Add CSS at the head of HTML file -->
-    <link rel="stylesheet" href="./css/main.css">
+<meta charset="UTF-8" />
+<title>Ring Compression Test Simulation</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    h2 { color: #003399; }
+    #container {
+        display: flex;
+        gap: 20px;
+    }
+    #controls {
+        width: 280px;
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #canvasBox {
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .inputBox {
+        margin-bottom: 12px;
+    }
+    label { font-weight: bold; }
+    button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background: #003399;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+</style>
 </head>
 <body>
-		<!-- Your code goes here-->
+<h2>Ring Compression Test – Virtual Simulation</h2>
+<div id="container">
 
-	<!-- Add JS at the bottom of HTML file --> 
-        <script src="./js/main.js"></script>
+    <div id="controls">
+        <div class="inputBox">
+            <label>Initial Outer Diameter (mm):</label>
+            <input type="number" id="outerDia" value="60" />
+        </div>
+        <div class="inputBox">
+            <label>Initial Inner Diameter (mm):</label>
+            <input type="number" id="innerDia" value="30" />
+        </div>
+        <div class="inputBox">
+            <label>Initial Height (mm):</label>
+            <input type="number" id="height" value="20" />
+        </div>
+        <div class="inputBox">
+            <label>Compression (%)</label>
+            <input type="number" id="compression" value="40" />
+        </div>
+        <button onclick="simulate()">Start Simulation</button>
+    </div>
+
+    <div id="canvasBox">
+        <canvas id="simCanvas" width="500" height="400"></canvas>
+    </div>
+
+</div>
+
+<script>
+function simulate() {
+    const canvas = document.getElementById("simCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let OD = parseFloat(document.getElementById("outerDia").value);
+    let ID = parseFloat(document.getElementById("innerDia").value);
+    let H = parseFloat(document.getElementById("height").value);
+    let C = parseFloat(document.getElementById("compression").value);
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    let x = canvas.width/2;
+    let y = canvas.height/2;
+
+    let scale = 3;
+
+    let newH = H * (1 - C/100);
+    let bulge = (H - newH) * 0.6;
+
+    function drawRing(heightFactor) {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "#3399ff";
+
+        let currentH = H - (H - newH) * heightFactor;
+        let currentOD = (OD + bulge * heightFactor) * scale;
+        let currentID = (ID - bulge*0.4 * heightFactor) * scale;
+
+        ctx.beginPath();
+        ctx.arc(x, y, currentOD/2, 0, 2*Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(x, y, currentID/2, 0, 2*Math.PI);
+        ctx.fill();
+    }
+
+    let frame = 0;
+    let animation = setInterval(() => {
+        frame += 0.02;
+        drawRing(frame);
+        if(frame>=1) clearInterval(animation);
+    }, 30);
+}
+</script>
+
 </body>
 </html>
