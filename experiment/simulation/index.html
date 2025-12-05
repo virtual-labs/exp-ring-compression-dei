@@ -1,126 +1,403 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Ring Compression Test Simulation</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ring Compression Test — Interactive Simulation</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-        margin: 0;
-        padding: 20px;
-    }
-    h2 { color: #003399; }
-    #container {
-        display: flex;
-        gap: 20px;
-    }
-    #controls {
-        width: 280px;
-        background: white;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    #canvasBox {
-        background: white;
-        padding: 10px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .inputBox {
-        margin-bottom: 12px;
-    }
-    label { font-weight: bold; }
-    button {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        background: #003399;
-        color: white;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
+  :root{
+    --bg:#eef3f8; --card:#fff; --accent:#0b63d6; --muted:#6b7280;
+    --good:#d4edda; --bad:#f8d7da; --warn:#fff3cd;
+    font-family: Inter, Roboto, "Segoe UI", Arial, sans-serif;
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:#0b1720}
+  .container{max-width:1100px;margin:24px auto;padding:20px;background:var(--card);border-radius:12px;box-shadow:0 10px 30px rgba(10,20,40,0.08)}
+  h1{margin:0 0 6px;color:var(--accent);text-align:center}
+  p.lead{margin:4px 0 18px;text-align:center;color:var(--muted)}
+  .panel{display:flex;gap:18px}
+  #machine-view{flex:1;min-height:520px;background:#333;border-radius:8px;position:relative;overflow:hidden}
+  canvas{display:block;background:#555;width:100%;height:520px}
+  #control-panel{width:330px;min-width:260px;padding:18px;background:#f7fbff;border:1px solid #e3f0ff;border-radius:8px;display:flex;flex-direction:column;gap:12px}
+  .control-group{background:#fff;padding:10px;border-radius:8px;border:1px solid #eef4ff}
+  label{display:block;font-weight:700;color:var(--accent);margin-bottom:6px}
+  input[type=number], input[type=range], select{width:100%;padding:6px;border-radius:6px;border:1px solid #cfdcec;font-size:14px}
+  .small{font-size:13px;color:var(--muted)}
+  .btn{padding:10px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+  .btn.clamp{background:#ff9800;color:#fff}
+  .btn.start{background:#4caf50;color:#fff}
+  .btn.reset{background:#f44336;color:#fff}
+  .btn:disabled{opacity:0.5;cursor:not-allowed}
+  #status-bar{margin-top:12px;padding:10px;border-radius:8px;background:#e6f3ff;color:#034a7a;font-weight:700;text-align:center}
+  #progress-bar-container{position:absolute;left:6%;right:6%;bottom:18px;background:rgba(255,255,255,0.08);padding:8px;border-radius:6px;display:none}
+  #progress-bar{height:14px;background:#2196f3;width:0%;border-radius:6px;transition:width 0.08s linear}
+  #readouts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .readout{flex:1;min-width:120px;background:#fff;padding:8px;border-radius:8px;border:1px solid #eef4ff;font-weight:600}
+  footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+  @media (max-width:900px){.panel{flex-direction:column}.container{margin:8px}}
 </style>
 </head>
 <body>
-<h2>Ring Compression Test – Virtual Simulation</h2>
-<div id="container">
+  <div class="container">
+    <h1>Ring Compression Test — Interactive Simulation</h1>
+    <p class="lead">Compress a ring specimen, watch height & radial flow change, and see how friction affects inner diameter evolution.</p>
 
-    <div id="controls">
-        <div class="inputBox">
-            <label>Initial Outer Diameter (mm):</label>
-            <input type="number" id="outerDia" value="60" />
+    <div class="panel">
+      <div id="machine-view">
+        <canvas id="simCanvas" width="800" height="520"></canvas>
+
+        <div id="progress-bar-container">
+          <div style="font-size:13px;color:#eef;font-weight:700;margin-bottom:6px;text-align:center">Forming Progress</div>
+          <div id="progress-bar"></div>
         </div>
-        <div class="inputBox">
-            <label>Initial Inner Diameter (mm):</label>
-            <input type="number" id="innerDia" value="30" />
+      </div>
+
+      <div id="control-panel">
+        <div class="control-group">
+          <label>Specimen geometry</label>
+          <div class="small">Outer diameter (OD)</div>
+          <input id="od" type="number" min="10" value="60" />
+          <div class="small" style="margin-top:8px">Inner diameter (ID)</div>
+          <input id="id" type="number" min="2" value="30" />
+          <div class="small" style="margin-top:8px">Height (H)</div>
+          <input id="h" type="number" min="2" value="20" />
         </div>
-        <div class="inputBox">
-            <label>Initial Height (mm):</label>
-            <input type="number" id="height" value="20" />
+
+        <div class="control-group">
+          <label>Test parameters</label>
+          <div class="small">Target height reduction (%)</div>
+          <input id="reduction" type="number" min="1" max="80" value="40" />
+          <div style="margin-top:8px" class="small">Friction (0 = low / 1 = high)</div>
+          <input id="friction" type="range" min="0" max="1" step="0.01" value="0.4" />
+          <div class="small" id="fricVal" style="margin-top:6px">Friction = 0.40</div>
         </div>
-        <div class="inputBox">
-            <label>Compression (%)</label>
-            <input type="number" id="compression" value="40" />
+
+        <div style="display:flex;gap:8px">
+          <button id="clampBtn" class="btn clamp">Clamp Workpiece</button>
+          <button id="startBtn" class="btn start" disabled>Start</button>
+          <button id="resetBtn" class="btn reset" disabled>Reset</button>
         </div>
-        <button onclick="simulate()">Start Simulation</button>
+
+        <div id="status-bar">Status: Click <strong>Clamp Workpiece</strong> to enable inputs.</div>
+
+        <div id="readouts">
+          <div class="readout">H (initial): <span id="H0">20.00</span> mm</div>
+          <div class="readout">ID (initial): <span id="ID0">30.00</span> mm</div>
+          <div class="readout">OD (initial): <span id="OD0">60.00</span> mm</div>
+          <div class="readout">H (current): <span id="Hc">20.00</span> mm</div>
+          <div class="readout">ID (current): <span id="IDc">30.00</span> mm</div>
+          <div class="readout">OD (current): <span id="ODc">60.00</span> mm</div>
+        </div>
+
+        <div style="margin-top:8px" class="small">
+          <strong>Estimate:</strong> Estimated friction factor from geometry: <span id="estFric">—</span>
+        </div>
+
+      </div>
     </div>
 
-    <div id="canvasBox">
-        <canvas id="simCanvas" width="500" height="400"></canvas>
-    </div>
-
-</div>
+    <footer>Model notes: volume-conserved geometric model. Simplified — good for concept demonstration, not full FEM.</footer>
+  </div>
 
 <script>
-function simulate() {
-    const canvas = document.getElementById("simCanvas");
-    const ctx = canvas.getContext("2d");
+/* ---------------------------
+   Simulation: Ring compression
+   - volume conservation
+   - outer expansion depends on friction (low friction -> more outward flow)
+   - inner diameter computed from new area
+----------------------------*/
 
-    let OD = parseFloat(document.getElementById("outerDia").value);
-    let ID = parseFloat(document.getElementById("innerDia").value);
-    let H = parseFloat(document.getElementById("height").value);
-    let C = parseFloat(document.getElementById("compression").value);
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+const OD_in = document.getElementById('od');
+const ID_in = document.getElementById('id');
+const H_in = document.getElementById('h');
+const reduction_in = document.getElementById('reduction');
+const friction_in = document.getElementById('friction');
+const fricVal = document.getElementById('fricVal');
 
-    let x = canvas.width/2;
-    let y = canvas.height/2;
+const clampBtn = document.getElementById('clampBtn');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+const statusBar = document.getElementById('status-bar');
+const progressBarContainer = document.getElementById('progress-bar-container');
+const progressBar = document.getElementById('progress-bar');
 
-    let scale = 3;
+const H0read = document.getElementById('H0');
+const ID0read = document.getElementById('ID0');
+const OD0read = document.getElementById('OD0');
+const Hcread = document.getElementById('Hc');
+const IDcread = document.getElementById('IDc');
+const ODcread = document.getElementById('ODc');
+const estFricOut = document.getElementById('estFric');
 
-    let newH = H * (1 - C/100);
-    let bulge = (H - newH) * 0.6;
+let clamped = false;
+let running = false;
+let animationId = null;
+let startTime = null;
 
-    function drawRing(heightFactor) {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = "#3399ff";
+// visual params
+const cx = canvas.width/2;
+const cy = canvas.height/2 + 20;
+const scale = 3.0; // mm -> px
 
-        let currentH = H - (H - newH) * heightFactor;
-        let currentOD = (OD + bulge * heightFactor) * scale;
-        let currentID = (ID - bulge*0.4 * heightFactor) * scale;
+// physical model state
+let OD0 = parseFloat(OD_in.value);
+let ID0 = parseFloat(ID_in.value);
+let H0 = parseFloat(H_in.value);
 
-        ctx.beginPath();
-        ctx.arc(x, y, currentOD/2, 0, 2*Math.PI);
-        ctx.fill();
+// computed initial cross-section area and volume
+function updateInitialState(){
+  OD0 = parseFloat(OD_in.value);
+  ID0 = parseFloat(ID_in.value);
+  H0  = parseFloat(H_in.value);
 
-        ctx.fillStyle = "white";
-        ctx.beginPath();
-        ctx.arc(x, y, currentID/2, 0, 2*Math.PI);
-        ctx.fill();
-    }
+  // guard against impossible geometry
+  if(ID0 >= OD0 - 0.1){ ID0 = Math.max(1, OD0 - 1); ID_in.value = ID0; }
+  if(H0 <= 0.5){ H0 = 0.5; H_in.value = H0; }
 
-    let frame = 0;
-    let animation = setInterval(() => {
-        frame += 0.02;
-        drawRing(frame);
-        if(frame>=1) clearInterval(animation);
-    }, 30);
+  const A0 = Math.PI*(OD0*OD0 - ID0*ID0)/4.0;
+  const V0 = A0 * H0;
+
+  H0read.textContent = H0.toFixed(2);
+  ID0read.textContent = ID0.toFixed(2);
+  OD0read.textContent = OD0.toFixed(2);
+
+  return {A0, V0};
 }
-</script>
 
+friction_in.addEventListener('input', () => {
+  fricVal.textContent = 'Friction = ' + parseFloat(friction_in.value).toFixed(2);
+});
+
+let model = updateInitialState();
+
+// drawing helpers
+function clear(){ ctx.clearRect(0,0,canvas.width,canvas.height); }
+function drawDies(){
+  ctx.fillStyle = '#9aaabc';
+  ctx.fillRect(0, cy+80, canvas.width, 120); // base
+  // top die
+  ctx.fillStyle = '#9aaabc';
+  ctx.fillRect(0, cy-200, canvas.width, 50);
+}
+
+// draw ring given OD, ID, H (in mm)
+function drawRing(OD, ID, H){
+  // map mm -> px
+  const outerR = (OD/2) * scale;
+  const innerR = (ID/2) * scale;
+
+  // draw fixture/top/bottom gaps proportional to H
+  const gap = Math.max(6, (H/2) * scale); // visual gap
+  const yTop = cy - gap/2 - 20;
+  const yBottom = cy + gap/2 + 20;
+
+  // background ring (outer)
+  ctx.save();
+  ctx.translate(cx, cy);
+  // outer
+  ctx.fillStyle = '#3b82f6';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, outerR, outerR*0.7, 0, 0, Math.PI*2);
+  ctx.fill();
+  // inner hole
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, innerR, innerR*0.7, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // draw outlines
+  ctx.strokeStyle = '#1f4f9b'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.ellipse(0,0,outerR,outerR*0.7,0,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(0,0,innerR,innerR*0.7,0,0,Math.PI*2); ctx.stroke();
+
+  ctx.restore();
+}
+
+// simple textual overlay
+function drawOverlay(text){
+  ctx.fillStyle = '#fff'; ctx.font = '14px Inter, Arial';
+  ctx.fillText(text, 12, 22);
+}
+
+// main draw (live)
+function renderState(ODc, IDc, Hc, progress){
+  clear();
+  drawDies();
+
+  // draw ring
+  drawRing(ODc, IDc, Hc);
+
+  // overlays
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '12px Inter, Arial';
+  ctx.fillText('Progress: ' + Math.round(progress*100) + '%', 12, 42);
+  ctx.fillText('H (mm): ' + Hc.toFixed(2), 12, 60);
+  ctx.fillText('OD (mm): ' + ODc.toFixed(2), 12, 78);
+  ctx.fillText('ID (mm): ' + IDc.toFixed(2), 12, 96);
+}
+
+// clamp / UI logic
+clampBtn.addEventListener('click', () => {
+  if(clamped) return;
+  clamped = true;
+  clampBtn.textContent = 'Workpiece Clamped';
+  clampBtn.disabled = true;
+  startBtn.disabled = false;
+  resetBtn.disabled = true;
+  statusBar.textContent = 'Status: Set reduction & friction, then click START';
+  updateInitialState();
+  model = updateInitialState();
+  renderState(OD0, ID0, H0, 0);
+});
+
+// start cycle
+startBtn.addEventListener('click', () => {
+  if(!clamped || running) return;
+  running = true;
+  startBtn.disabled = true;
+  clampBtn.disabled = true;
+  resetBtn.disabled = true;
+  progressBarContainer.style.display = 'block';
+  statusBar.textContent = 'Status: Forming...';
+  model = updateInitialState();
+
+  const reduction = Math.max(0.01, Math.min(0.8, parseFloat(reduction_in.value)/100)); // fraction
+  const friction = parseFloat(friction_in.value); // 0..1
+
+  // Target height
+  const Hf = H0 * (1 - reduction); // final height (mm)
+
+  // initial area and volume
+  const A0 = Math.PI*(OD0*OD0 - ID0*ID0)/4.0;
+  const V0 = A0 * H0;
+
+  // new cross-sectional area to conserve volume
+  const Af = V0 / Hf;
+
+  // Simple empirical: outer expansion responds to (1 - friction)
+  // ODf = OD0 * (1 + gamma * reduction * (1 - friction))
+  // gamma controls how much OD can expand relative to reduction; tuned for visual plausibility
+  const gamma = 0.55;
+  const ODf_guess = OD0 * (1 + gamma * reduction * (1 - friction));
+
+  // From Af and ODf_guess, compute IDf required to satisfy area:
+  // Af = π*(ODf^2 - IDf^2)/4  => IDf = sqrt(ODf^2 - (4*Af)/π)
+  let IDf = Math.sqrt(Math.max(0, ODf_guess*ODf_guess - (4*Af)/Math.PI));
+  let ODf = ODf_guess;
+
+  // If sqrt fails (negative), fallback: solve for ODf by keeping ID change small:
+  if(isNaN(IDf) || (IDf >= ODf - 0.1)){
+    // fallback: compute ODf from Af assuming inner stays proportional
+    const t0 = (OD0 - ID0)/2; // initial thickness
+    const r_mean = (OD0 + ID0)/2;
+    // let new thickness scale by (1 - friction)*reduction
+    const t_new = Math.max(0.5, t0 * (1 + 0.5 * reduction * (1 - friction)));
+    // then ODf = sqrt( (4*Af)/π + IDf^2 ) ; iterate a couple times
+    IDf = Math.max(1, ID0 * (1 - 0.2*friction*reduction)); // slight heuristic
+    ODf = Math.sqrt((4*Af)/Math.PI + IDf*IDf);
+  }
+
+  // Limiters
+  if(IDf < 1) IDf = 1;
+  if(ODf < IDf + 0.5) ODf = IDf + 0.5;
+
+  // Animation: interpolate from initial (OD0,ID0,H0) to (ODf,IDf,Hf)
+  const duration = 3000 * (1 - Math.min(0.8, reduction)); // faster for large reductions
+  const t0_time = performance.now();
+
+  function step(time){
+    const elapsed = time - t0_time;
+    const p = Math.min(1, elapsed / duration);
+    // easing (smooth)
+    const ease = p<0.5? 2*p*p : -1 + (4-2*p)*p;
+
+    const Hc = H0 + (Hf - H0)*ease;
+    const ODc = OD0 + (ODf - OD0)*ease;
+    const IDc = ID0 + (IDf - ID0)*ease;
+
+    // update DOM readouts
+    Hcread.textContent = Hc.toFixed(2);
+    IDcread.textContent = IDc.toFixed(2);
+    ODcread.textContent = ODc.toFixed(2);
+
+    renderState(ODc, IDc, Hc, ease);
+    progressBar.style.width = (ease*100) + '%';
+
+    if(p < 1){
+      animationId = requestAnimationFrame(step);
+    } else {
+      // finish
+      running = false;
+      progressBar.style.width = '100%';
+      progressBarContainer.style.display = 'none';
+      resetBtn.disabled = false;
+      clampBtn.disabled = true;
+      startBtn.disabled = true;
+      statusBar.textContent = 'Status: Cycle complete — inspect geometry & estimated friction.';
+      // estimate friction from ID change roughly:
+      const idChange = (IDf - ID0)/ID0; // relative
+      // map to estimated friction: more positive idChange -> lower friction
+      let estm = 1 - (idChange / (0.6 * reduction)); // heuristic
+      if(!isFinite(estm)) estm = friction; // fallback
+      estm = Math.min(1, Math.max(0, estm));
+      estFricOut.textContent = estm.toFixed(2) + ' (approx)';
+      // final draw ensured
+      Hcread.textContent = Hf.toFixed(2);
+      IDcread.textContent = IDf.toFixed(2);
+      ODcread.textContent = ODf.toFixed(2);
+      // small highlight of result (good/partial/failure) based on ID behaviour:
+      if(IDf > ID0 + 0.5){
+        statusBar.style.background = 'var(--good)';
+        statusBar.textContent = 'Status: Low friction behaviour — ID increased (radial outward flow).';
+      } else if(IDf < ID0 - 0.5){
+        statusBar.style.background = 'var(--bad)';
+        statusBar.textContent = 'Status: High friction behaviour — ID decreased (constrained inward).';
+      } else {
+        statusBar.style.background = 'var(--warn)';
+        statusBar.textContent = 'Status: Moderate friction — partial flow.';
+      }
+    }
+  }
+
+  animationId = requestAnimationFrame(step);
+});
+
+// reset
+resetBtn.addEventListener('click', () => {
+  if(animationId) cancelAnimationFrame(animationId);
+  clamped = false; running = false;
+  clampBtn.disabled = false; clampBtn.textContent = 'Clamp Workpiece';
+  startBtn.disabled = true; resetBtn.disabled = true;
+  progressBarContainer.style.display = 'none';
+  progressBar.style.width = '0%';
+  statusBar.textContent = 'Status: Click Clamp Workpiece to begin.';
+  statusBar.style.background = '';
+  estFricOut.textContent = '—';
+  // restore readings
+  model = updateInitialState();
+  Hcread.textContent = H0.toFixed(2);
+  IDcread.textContent = ID0.toFixed(2);
+  ODcread.textContent = OD0.toFixed(2);
+  renderState(OD0, ID0, H0, 0);
+});
+
+// keep inputs synced and guard
+OD_in.addEventListener('change', () => { updateInitialState(); renderState(OD0,ID0,H0,0); });
+ID_in.addEventListener('change', () => { updateInitialState(); renderState(OD0,ID0,H0,0); });
+H_in.addEventListener('change', () => { updateInitialState(); renderState(OD0,ID0,H0,0); });
+reduction_in.addEventListener('change', () => { /* no-op */ });
+
+window.addEventListener('load', () => {
+  model = updateInitialState();
+  Hcread.textContent = H0.toFixed(2);
+  IDcread.textContent = ID0.toFixed(2);
+  ODcread.textContent = OD0.toFixed(2);
+  renderState(OD0, ID0, H0, 0);
+});
+
+</script>
 </body>
 </html>
+
