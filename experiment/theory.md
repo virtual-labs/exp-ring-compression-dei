@@ -6,8 +6,9 @@
 
 <br>
 <center>
-    <iframe width="600" height="400" src="https://www.youtube.com/embed/SIZsIc7U1eM?rel=0" frameborder="0" allowfullscreen></iframe>
-</center>
+    <center><video width="650" height="400" controls>
+<source src="simulation/RCT/Al_Cold_Velocity1/Ring_Compression_COLD_AL_v1_mu_tresca_0p1.mp4" type="video/mp4">
+</video></center>
 <br>
 
 <h2 class="section-title">THE PRINCIPLE OF RING TEST</h2>
@@ -54,9 +55,9 @@
 <tr><td>% Reduction in Height</td><td>: 50%</td></tr>
 </table>
 
-<center>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/4R6OI4_TO7s?rel=0" frameborder="0" allowfullscreen></iframe>
-</center>
+<center><video width="650" height="400" controls>
+<source src="simulation/RCT/Al_Hot_Velocity1/Ring_Compression_HOT_AL_v1_f0.mp4" type="video/mp4">
+</video></center>
 <br>
 
 <!-- CASE B -->
@@ -79,9 +80,9 @@
 <tr><td>% Reduction in Height</td><td>: 50%</td></tr>
 </table>
 
-<center>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/DiTtHV2M_Ug?rel=0" frameborder="0" allowfullscreen></iframe>
-</center>
+<center><video width="650" height="400" controls>
+<source src="simulation/RCT/Al_Hot_Velocity1/Ring_Compression_HOT_AL_v1_ftresca_0p1.mp4" type="video/mp4">
+</video></center
 <br>
 
 <!-- CASE C -->
@@ -103,10 +104,10 @@
 <tr><td>% Decrease in ID</td><td>: 13.9990%</td></tr>
 <tr><td>% Reduction in Height</td><td>: 50%</td></tr>
 </table>
-
 <center>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/xMOTZLEwNYY?rel=0" frameborder="0" allowfullscreen></iframe>
-</center>
+<video width="650" height="400" controls>
+<source src="simulation/RCT/Al_Hot_Velocity1/Ring_Compression_HOT_AL_v1_ftresca_0p3.mp4" type="video/mp4">
+</video></center>
 <br>
 
 <!-- CASE D -->
@@ -130,7 +131,9 @@
 </table>
 
 <center>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/TJude7wfZ0I?rel=0" frameborder="0" allowfullscreen></iframe>
+<center><video width="650" height="400" controls>
+<source src="simulation/RCT/Al_Hot_Velocity1/Ring_Compression_HOT_AL_v1_ftresca_0p4.mp4" type="video/mp4">
+</video></center>
 </center>
 <br>
 
