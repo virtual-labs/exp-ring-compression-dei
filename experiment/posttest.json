@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "In the simulation bench of the ring compression test, the ram speed of the die is:",
+      "question": "Q6.In the simulation bench of the ring compression test, the ram speed of the die is:",
       "answers": {
         "a": "1mm/sec, 5mm/sec",
         "b": "1mm/sec, 2mm/sec",
@@ -19,7 +19,7 @@
       "difficulty": "medium"
     },
     {
-      "question": "Which of the following may not be the friction between the specimen and the dies in the simulation bench of the ring compression test:",
+      "question": "Q7.Which of the following may not be the friction between the specimen and the dies in the simulation bench of the ring compression test:",
       "answers": {
         "a": "0.05",
         "b": "0.4",
@@ -36,7 +36,7 @@
       "difficulty": "medium"
     },
     {
-      "question": "In the ring compression test of the specimen, the specimen is deformed by:",
+      "question": "Q8.In the ring compression test of the specimen, the specimen is deformed by:",
       "answers": {
         "a": "Tensile load",
         "b": "Compression",
@@ -53,7 +53,7 @@
       "difficulty": "easy"
     },
     {
-      "question": "In the simulation bench of the ring compression test, the outer and inner diameter of the specimen before testing is:",
+      "question": "Q9.In the simulation bench of the ring compression test, the outer and inner diameter of the specimen before testing is:",
       "answers": {
         "a": "60mm, 30mm",
         "b": "40mm, 20mm",
@@ -70,7 +70,7 @@
       "difficulty": "easy"
     },
     {
-      "question": "In the simulation bench of the ring compression test, the initial height of the specimen is:",
+      "question": "Q10.In the simulation bench of the ring compression test, the initial height of the specimen is:",
       "answers": {
         "a": "10mm",
         "b": "20mm",
