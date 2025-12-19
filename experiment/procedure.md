@@ -1,6 +1,4 @@
-# Procedure-Ring Compression Test 
 
----
 
 ## **1. Preparation**
 
