@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-<h1>Ring Compression Test</h1>
 
 <p>Ring compression test has been widely used to evaluate friction conditions in metal forming processes.</p>
 
